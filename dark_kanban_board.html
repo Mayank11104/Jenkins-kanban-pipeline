@@ -1,0 +1,570 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #0f1423;
+    --bg-surface: #141928;
+    --bg-card: #1a2035;
+    --bg-card-hover: #1f2640;
+    --bg-input: #111827;
+    --border-subtle: rgba(255,255,255,0.06);
+    --border-default: rgba(255,255,255,0.1);
+    --border-strong: rgba(255,255,255,0.18);
+    --text-primary: #e8ecf4;
+    --text-secondary: #8892a4;
+    --text-muted: #4d5568;
+    --text-hint: #2d3748;
+    --accent-todo: #e040fb;
+    --accent-todo-glow: rgba(224,64,251,0.35);
+    --accent-todo-bg: rgba(224,64,251,0.08);
+    --accent-todo-border: rgba(224,64,251,0.4);
+    --accent-progress: #fbbf24;
+    --accent-progress-glow: rgba(251,191,36,0.35);
+    --accent-progress-bg: rgba(251,191,36,0.08);
+    --accent-progress-border: rgba(251,191,36,0.4);
+    --accent-done: #2dd4bf;
+    --accent-done-glow: rgba(45,212,191,0.35);
+    --accent-done-bg: rgba(45,212,191,0.08);
+    --accent-done-border: rgba(45,212,191,0.4);
+    --accent-brand-a: #818cf8;
+    --accent-brand-b: #e040fb;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+    --shadow-card: 0 2px 12px rgba(0,0,0,0.4);
+    --shadow-card-hover: 0 8px 28px rgba(0,0,0,0.5);
+    --transition: 0.22s cubic-bezier(.4,0,.2,1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body, .kb-root {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    width: 100%;
+  }
+  .kb-root { padding: 0; position: relative; overflow: hidden; }
+
+  .bg-blob {
+    position: absolute; border-radius: 50%; filter: blur(90px);
+    pointer-events: none; z-index: 0;
+  }
+  .blob1 { width: 500px; height: 500px; top: -180px; left: -120px; background: rgba(129,140,248,0.06); }
+  .blob2 { width: 420px; height: 420px; top: 40%; right: -140px; background: rgba(224,64,251,0.05); }
+  .blob3 { width: 350px; height: 350px; bottom: -100px; left: 30%; background: rgba(45,212,191,0.04); }
+
+  .kb-header {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 28px 16px;
+    border-bottom: 0.5px solid var(--border-subtle);
+  }
+  .kb-header-left { display: flex; align-items: center; gap: 14px; }
+  .kb-logo {
+    width: 32px; height: 32px; border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--accent-brand-a), var(--accent-brand-b));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: #fff; font-weight: 700; letter-spacing: -0.5px;
+  }
+  .kb-title {
+    font-size: 17px; font-weight: 700; letter-spacing: -0.4px;
+    background: linear-gradient(90deg, var(--accent-brand-a), var(--accent-brand-b));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .kb-breadcrumb { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+  .status-pill {
+    display: flex; align-items: center; gap: 7px;
+    background: rgba(45,212,191,0.1); border: 0.5px solid rgba(45,212,191,0.25);
+    border-radius: 20px; padding: 5px 12px;
+    font-size: 11.5px; font-weight: 500; color: #2dd4bf;
+  }
+  .pulse-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #2dd4bf;
+    box-shadow: 0 0 0 0 rgba(45,212,191,0.6);
+    animation: pulse-anim 2s infinite;
+  }
+  @keyframes pulse-anim {
+    0% { box-shadow: 0 0 0 0 rgba(45,212,191,0.6); }
+    70% { box-shadow: 0 0 0 6px rgba(45,212,191,0); }
+    100% { box-shadow: 0 0 0 0 rgba(45,212,191,0); }
+  }
+  .kb-header-right { display: flex; align-items: center; gap: 10px; }
+  .hdr-btn {
+    background: rgba(255,255,255,0.04); border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-sm); padding: 6px 13px;
+    font-size: 12px; color: var(--text-secondary); cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: all var(--transition);
+  }
+  .hdr-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+
+  .kb-toolbar {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 28px;
+    border-bottom: 0.5px solid var(--border-subtle);
+  }
+  .kb-meta { display: flex; align-items: center; gap: 16px; }
+  .meta-tag {
+    font-size: 11.5px; color: var(--text-muted);
+    background: rgba(255,255,255,0.03); border: 0.5px solid var(--border-subtle);
+    border-radius: 4px; padding: 3px 8px; display: flex; align-items: center; gap: 5px;
+  }
+  .meta-tag i { font-size: 13px; }
+  .add-btn {
+    display: flex; align-items: center; gap: 7px;
+    background: linear-gradient(135deg, rgba(129,140,248,0.18), rgba(224,64,251,0.18));
+    border: 0.5px solid rgba(129,140,248,0.35);
+    border-radius: var(--radius-sm); padding: 7px 16px;
+    font-size: 12.5px; font-weight: 500; color: var(--accent-brand-a);
+    cursor: pointer; transition: all var(--transition);
+  }
+  .add-btn:hover { background: linear-gradient(135deg, rgba(129,140,248,0.28), rgba(224,64,251,0.28)); border-color: rgba(129,140,248,0.55); }
+  .add-btn i { font-size: 14px; }
+
+  .add-form-wrap {
+    position: relative; z-index: 1;
+    margin: 0 28px 0;
+    border: 1.5px dashed rgba(129,140,248,0.25);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition);
+  }
+  .add-form-wrap.hidden { display: none; }
+  .add-form-inner {
+    background: rgba(20,25,40,0.9);
+    padding: 18px 20px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .add-form-row { display: flex; gap: 10px; }
+  .form-col { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .form-label { font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; }
+  .form-input, .form-textarea {
+    background: var(--bg-input); border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-sm); padding: 9px 12px;
+    font-size: 13px; color: var(--text-primary); font-family: inherit;
+    outline: none; resize: none; transition: border-color var(--transition);
+  }
+  .form-input:focus, .form-textarea:focus { border-color: rgba(129,140,248,0.5); }
+  .form-textarea { height: 68px; line-height: 1.5; }
+  .form-select {
+    background: var(--bg-input); border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-sm); padding: 9px 12px;
+    font-size: 13px; color: var(--text-primary); font-family: inherit;
+    outline: none; cursor: pointer; width: 100%;
+    appearance: none;
+  }
+  .form-actions { display: flex; gap: 8px; align-items: center; }
+  .btn-submit {
+    background: linear-gradient(135deg, var(--accent-brand-a), var(--accent-brand-b));
+    border: none; border-radius: var(--radius-sm); padding: 8px 18px;
+    font-size: 12.5px; font-weight: 600; color: #fff; cursor: pointer;
+    transition: opacity var(--transition);
+  }
+  .btn-submit:hover { opacity: 0.88; }
+  .btn-cancel {
+    background: transparent; border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-sm); padding: 8px 14px;
+    font-size: 12.5px; color: var(--text-secondary); cursor: pointer;
+    transition: all var(--transition);
+  }
+  .btn-cancel:hover { border-color: var(--border-strong); color: var(--text-primary); }
+
+  .kb-board {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; padding: 18px 28px 28px;
+    align-items: start;
+  }
+  .kb-col {
+    background: rgba(15,20,35,0.7);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    min-height: 400px;
+    display: flex; flex-direction: column;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    backdrop-filter: blur(12px);
+  }
+  .kb-col.drag-over-todo { border-color: var(--accent-todo-border); box-shadow: 0 0 0 1px var(--accent-todo-border), inset 0 0 60px rgba(224,64,251,0.04); }
+  .kb-col.drag-over-progress { border-color: var(--accent-progress-border); box-shadow: 0 0 0 1px var(--accent-progress-border), inset 0 0 60px rgba(251,191,36,0.04); }
+  .kb-col.drag-over-done { border-color: var(--accent-done-border); box-shadow: 0 0 0 1px var(--accent-done-border), inset 0 0 60px rgba(45,212,191,0.04); }
+
+  .col-header {
+    padding: 16px 18px 12px;
+    border-bottom: 0.5px solid var(--border-subtle);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .col-header-left { display: flex; align-items: center; gap: 10px; }
+  .col-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .col-dot.todo { background: var(--accent-todo); box-shadow: 0 0 10px var(--accent-todo-glow); }
+  .col-dot.progress { background: var(--accent-progress); box-shadow: 0 0 10px var(--accent-progress-glow); }
+  .col-dot.done { background: var(--accent-done); box-shadow: 0 0 10px var(--accent-done-glow); }
+  .col-title { font-size: 13px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.2px; }
+  .col-count {
+    font-size: 11px; font-weight: 500;
+    padding: 2px 8px; border-radius: 10px;
+  }
+  .col-count.todo { background: var(--accent-todo-bg); color: var(--accent-todo); }
+  .col-count.progress { background: var(--accent-progress-bg); color: var(--accent-progress); }
+  .col-count.done { background: var(--accent-done-bg); color: var(--accent-done); }
+  .col-menu { color: var(--text-muted); cursor: pointer; font-size: 16px; padding: 2px; border-radius: 4px; transition: color var(--transition); }
+  .col-menu:hover { color: var(--text-secondary); }
+
+  .col-body { padding: 12px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+
+  .empty-state {
+    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; padding: 36px 20px; text-align: center;
+    border: 1.5px dashed rgba(255,255,255,0.07); border-radius: var(--radius-lg);
+    margin: 4px 0;
+  }
+  .empty-state i { font-size: 24px; color: var(--text-hint); }
+  .empty-state p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  .task-card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 13px 14px;
+    cursor: grab;
+    position: relative;
+    transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition), opacity var(--transition);
+    box-shadow: var(--shadow-card);
+  }
+  .task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+    background: var(--bg-card-hover);
+    border-color: var(--border-default);
+  }
+  .task-card:hover .card-delete { opacity: 1; }
+  .task-card.dragging {
+    opacity: 0.55; transform: rotate(1.8deg) scale(1.02);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+    cursor: grabbing;
+  }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 7px; }
+  .card-title { font-size: 13px; font-weight: 500; color: var(--text-primary); line-height: 1.45; flex: 1; }
+  .card-delete {
+    opacity: 0; background: rgba(239,68,68,0.1); border: 0.5px solid rgba(239,68,68,0.2);
+    border-radius: 5px; padding: 4px 6px; cursor: pointer;
+    font-size: 13px; color: rgba(239,68,68,0.7);
+    transition: all var(--transition); flex-shrink: 0;
+  }
+  .card-delete:hover { background: rgba(239,68,68,0.2); color: #ef4444; opacity: 1; }
+  .card-desc { font-size: 11.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .card-meta { display: flex; align-items: center; gap: 8px; }
+  .card-tag {
+    font-size: 10.5px; font-weight: 500; padding: 2.5px 8px; border-radius: 4px;
+    border: 0.5px solid;
+  }
+  .tag-feat { background: rgba(129,140,248,0.1); color: var(--accent-brand-a); border-color: rgba(129,140,248,0.25); }
+  .tag-bug { background: rgba(239,68,68,0.08); color: #f87171; border-color: rgba(239,68,68,0.2); }
+  .tag-design { background: rgba(224,64,251,0.08); color: var(--accent-todo); border-color: rgba(224,64,251,0.2); }
+  .tag-infra { background: rgba(45,212,191,0.08); color: var(--accent-done); border-color: rgba(45,212,191,0.2); }
+  .tag-review { background: rgba(251,191,36,0.08); color: var(--accent-progress); border-color: rgba(251,191,36,0.2); }
+  .card-time { font-size: 10.5px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+  .card-time i { font-size: 12px; }
+  .card-priority { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .prio-high { background: #ef4444; box-shadow: 0 0 6px rgba(239,68,68,0.5); }
+  .prio-med { background: #fbbf24; box-shadow: 0 0 6px rgba(251,191,36,0.4); }
+  .prio-low { background: #4ade80; box-shadow: 0 0 6px rgba(74,222,128,0.4); }
+  .card-avatar {
+    width: 20px; height: 20px; border-radius: 50%;
+    font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .av-a { background: rgba(129,140,248,0.25); color: var(--accent-brand-a); }
+  .av-b { background: rgba(224,64,251,0.2); color: var(--accent-todo); }
+  .av-c { background: rgba(45,212,191,0.2); color: var(--accent-done); }
+  .av-d { background: rgba(251,191,36,0.2); color: var(--accent-progress); }
+
+  .progress-bar-wrap { height: 3px; background: rgba(255,255,255,0.07); border-radius: 2px; margin-top: 9px; overflow: hidden; }
+  .progress-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent-brand-a), var(--accent-brand-b)); }
+
+  .col-add-btn {
+    display: flex; align-items: center; gap: 6px;
+    margin: 4px 12px 12px; padding: 8px 12px;
+    border-radius: var(--radius-md); border: 0.5px dashed var(--border-subtle);
+    background: transparent; color: var(--text-muted); font-size: 12px;
+    cursor: pointer; transition: all var(--transition); font-family: inherit;
+    width: calc(100% - 24px);
+  }
+  .col-add-btn:hover { border-color: var(--border-default); color: var(--text-secondary); background: rgba(255,255,255,0.02); }
+  .col-add-btn i { font-size: 14px; }
+
+  .tokens-panel {
+    position: relative; z-index: 1;
+    margin: 0 28px 28px;
+    background: rgba(15,20,35,0.6); border: 0.5px solid var(--border-subtle);
+    border-radius: var(--radius-lg); overflow: hidden;
+    backdrop-filter: blur(12px);
+  }
+  .tokens-header {
+    padding: 12px 18px; border-bottom: 0.5px solid var(--border-subtle);
+    display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+  }
+  .tokens-header-left { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 500; color: var(--text-secondary); }
+  .tokens-header-left i { font-size: 14px; color: var(--accent-brand-a); }
+  .tokens-toggle { font-size: 12px; color: var(--text-muted); }
+  .tokens-body {
+    padding: 16px 18px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px;
+  }
+  .token-row {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(0,0,0,0.2); border-radius: var(--radius-sm);
+    padding: 7px 10px; font-family: 'Courier New', monospace;
+  }
+  .token-swatch { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; border: 0.5px solid rgba(255,255,255,0.12); }
+  .token-name { font-size: 10.5px; color: var(--accent-brand-a); flex: 1; }
+  .token-val { font-size: 10px; color: var(--text-muted); }
+</style>
+
+<div class="kb-root">
+  <div class="bg-blob blob1"></div>
+  <div class="bg-blob blob2"></div>
+  <div class="bg-blob blob3"></div>
+
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Dark Kanban Board — To Do, In Progress, Done columns with draggable task cards</h2>
+
+  <header class="kb-header">
+    <div class="kb-header-left">
+      <div class="kb-logo">K</div>
+      <div>
+        <div class="kb-title">KanbanFlow</div>
+        <div class="kb-breadcrumb">Projects / Sprint 12 / Board</div>
+      </div>
+    </div>
+    <div class="status-pill">
+      <div class="pulse-dot"></div>
+      Connected
+    </div>
+    <div class="kb-header-right">
+      <button class="hdr-btn"><i class="ti ti-filter" aria-hidden="true"></i>Filter</button>
+      <button class="hdr-btn"><i class="ti ti-users" aria-hidden="true"></i>Team</button>
+      <button class="hdr-btn"><i class="ti ti-settings" aria-hidden="true"></i></button>
+    </div>
+  </header>
+
+  <div class="kb-toolbar">
+    <div class="kb-meta">
+      <span class="meta-tag"><i class="ti ti-calendar" aria-hidden="true"></i>Sprint 12 · May 12–26</span>
+      <span class="meta-tag"><i class="ti ti-git-branch" aria-hidden="true"></i>main</span>
+      <span class="meta-tag"><i class="ti ti-users" aria-hidden="true"></i>6 members</span>
+    </div>
+    <button class="add-btn" id="openFormBtn"><i class="ti ti-plus" aria-hidden="true"></i>Add Task</button>
+  </div>
+
+  <div class="add-form-wrap hidden" id="addForm">
+    <div class="add-form-inner">
+      <div class="add-form-row">
+        <div class="form-col" style="flex:2">
+          <label class="form-label">Task title</label>
+          <input class="form-input" id="newTitle" type="text" placeholder="What needs to be done?" />
+        </div>
+        <div class="form-col" style="flex:1">
+          <label class="form-label">Column</label>
+          <select class="form-select" id="newCol">
+            <option value="todo">To Do</option>
+            <option value="progress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+        <div class="form-col" style="flex:1">
+          <label class="form-label">Priority</label>
+          <select class="form-select" id="newPrio">
+            <option value="high">High</option>
+            <option value="med">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+      </div>
+      <div class="add-form-row">
+        <div class="form-col">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="newDesc" placeholder="Optional details…"></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-submit" id="submitTask">Create Task</button>
+        <button class="btn-cancel" id="cancelForm">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="kb-board" id="board">
+    <div class="kb-col" id="col-todo" data-col="todo">
+      <div class="col-header">
+        <div class="col-header-left">
+          <div class="col-dot todo"></div>
+          <span class="col-title">To Do</span>
+          <span class="col-count todo" id="count-todo">3</span>
+        </div>
+        <i class="ti ti-dots col-menu" aria-hidden="true"></i>
+      </div>
+      <div class="col-body" id="body-todo"></div>
+      <button class="col-add-btn" data-target="todo"><i class="ti ti-plus" aria-hidden="true"></i>Add item</button>
+    </div>
+    <div class="kb-col" id="col-progress" data-col="progress">
+      <div class="col-header">
+        <div class="col-header-left">
+          <div class="col-dot progress"></div>
+          <span class="col-title">In Progress</span>
+          <span class="col-count progress" id="count-progress">2</span>
+        </div>
+        <i class="ti ti-dots col-menu" aria-hidden="true"></i>
+      </div>
+      <div class="col-body" id="body-progress"></div>
+      <button class="col-add-btn" data-target="progress"><i class="ti ti-plus" aria-hidden="true"></i>Add item</button>
+    </div>
+    <div class="kb-col" id="col-done" data-col="done">
+      <div class="col-header">
+        <div class="col-header-left">
+          <div class="col-dot done"></div>
+          <span class="col-title">Done</span>
+          <span class="col-count done" id="count-done">2</span>
+        </div>
+        <i class="ti ti-dots col-menu" aria-hidden="true"></i>
+      </div>
+      <div class="col-body" id="body-done"></div>
+      <button class="col-add-btn" data-target="done"><i class="ti ti-plus" aria-hidden="true"></i>Add item</button>
+    </div>
+  </div>
+
+  <div class="tokens-panel">
+    <div class="tokens-header" id="tokensToggle">
+      <div class="tokens-header-left"><i class="ti ti-palette" aria-hidden="true"></i>Design Token System</div>
+      <span class="tokens-toggle" id="tokensArrow"><i class="ti ti-chevron-down" aria-hidden="true"></i></span>
+    </div>
+    <div class="tokens-body" id="tokensBody" style="display:none"></div>
+  </div>
+</div>
+
+<script>
+const TOKENS = [
+  ['--bg-primary','#0a0e1a'],['--bg-secondary','#0f1423'],['--bg-surface','#141928'],
+  ['--bg-card','#1a2035'],['--bg-card-hover','#1f2640'],['--bg-input','#111827'],
+  ['--border-subtle','rgba(255,255,255,0.06)'],['--border-default','rgba(255,255,255,0.10)'],
+  ['--border-strong','rgba(255,255,255,0.18)'],
+  ['--text-primary','#e8ecf4'],['--text-secondary','#8892a4'],['--text-muted','#4d5568'],
+  ['--accent-todo','#e040fb'],['--accent-todo-glow','rgba(224,64,251,0.35)'],
+  ['--accent-progress','#fbbf24'],['--accent-progress-glow','rgba(251,191,36,0.35)'],
+  ['--accent-done','#2dd4bf'],['--accent-done-glow','rgba(45,212,191,0.35)'],
+  ['--accent-brand-a','#818cf8'],['--accent-brand-b','#e040fb'],
+];
+const tb = document.getElementById('tokensBody');
+TOKENS.forEach(([k,v])=>{
+  const row = document.createElement('div');
+  row.className = 'token-row';
+  row.innerHTML = `<div class="token-swatch" style="background:${v}"></div><span class="token-name">${k}</span><span class="token-val">${v}</span>`;
+  tb.appendChild(row);
+});
+document.getElementById('tokensToggle').addEventListener('click',()=>{
+  const b=document.getElementById('tokensBody'),a=document.getElementById('tokensArrow');
+  if(b.style.display==='none'){b.style.display='grid';a.innerHTML='<i class="ti ti-chevron-up"></i>';}
+  else{b.style.display='none';a.innerHTML='<i class="ti ti-chevron-down"></i>';}
+});
+
+const SEED = [
+  {id:'t1',col:'todo',title:'Design new onboarding flow',desc:'Wireframe key screens and validate with user research findings.',tag:'design',prio:'high',time:'2m ago',av:'AK',avc:'av-a',prog:null},
+  {id:'t2',col:'todo',title:'Set up CI/CD pipeline for staging',tag:'infra',prio:'med',time:'1h ago',av:'BL',avc:'av-d',prog:null},
+  {id:'t3',col:'todo',title:'Fix auth token refresh bug',desc:'Users getting logged out unexpectedly after ~40 min idle.',tag:'bug',prio:'high',time:'3h ago',av:'CW',avc:'av-c',prog:null},
+  {id:'t4',col:'progress',title:'Refactor API response types',desc:'Migrate to Zod schemas across all endpoints.',tag:'feat',prio:'med',time:'5h ago',av:'DM',avc:'av-b',prog:65},
+  {id:'t5',col:'progress',title:'Implement dark mode toggle',tag:'design',prio:'low',time:'1d ago',av:'AK',avc:'av-a',prog:30},
+  {id:'t6',col:'done',title:'Update dependency audit report',tag:'infra',prio:'low',time:'2d ago',av:'BL',avc:'av-d',prog:null},
+  {id:'t7',col:'done',title:'Write unit tests for auth module',tag:'feat',prio:'med',time:'3d ago',av:'CW',avc:'av-c',prog:null},
+];
+
+let tasks = [...SEED];
+let dragId = null;
+
+function timeAgo(str){return str;}
+
+function makeCard(t){
+  const c=document.createElement('div');
+  c.className='task-card';c.dataset.id=t.id;c.draggable=true;
+  c.innerHTML=`
+    <div class="card-top">
+      <div class="card-title">${t.title}</div>
+      <button class="card-delete" data-del="${t.id}" aria-label="Delete task"><i class="ti ti-x" aria-hidden="true"></i></button>
+    </div>
+    ${t.desc?`<div class="card-desc">${t.desc}</div>`:''}
+    ${t.prog!=null?`<div class="progress-bar-wrap"><div class="progress-bar" style="width:${t.prog}%"></div></div>`:''}
+    <div class="card-footer" style="margin-top:${t.prog!=null?'9':'0'}px">
+      <div class="card-meta">
+        <div class="card-priority prio-${t.prio}"></div>
+        <span class="card-tag tag-${t.tag}">${t.tag}</span>
+        <span class="card-time"><i class="ti ti-clock" aria-hidden="true"></i>${t.time}</span>
+      </div>
+      <div class="card-avatar ${t.avc}">${t.av}</div>
+    </div>`;
+  c.addEventListener('dragstart',e=>{dragId=t.id;setTimeout(()=>c.classList.add('dragging'),0);e.dataTransfer.effectAllowed='move';});
+  c.addEventListener('dragend',()=>{c.classList.remove('dragging');dragId=null;});
+  c.querySelector('.card-delete').addEventListener('click',()=>{tasks=tasks.filter(x=>x.id!==t.id);render();});
+  return c;
+}
+
+function render(){
+  ['todo','progress','done'].forEach(col=>{
+    const body=document.getElementById('body-'+col);
+    body.innerHTML='';
+    const ct=tasks.filter(t=>t.col===col);
+    document.getElementById('count-'+col).textContent=ct.length;
+    if(ct.length===0){
+      const icons={todo:'ti-circle-dashed',progress:'ti-loader',done:'ti-circle-check'};
+      const msgs={todo:'No tasks yet.\nDrop cards here or add a new one.',progress:'Nothing in flight.\nStart a task to track progress.',done:'No completed tasks.\nFinish something great!'};
+      const es=document.createElement('div');es.className='empty-state';
+      es.innerHTML=`<i class="ti ${icons[col]}" aria-hidden="true"></i><p>${msgs[col]}</p>`;
+      body.appendChild(es);
+    } else {
+      ct.forEach(t=>body.appendChild(makeCard(t)));
+    }
+  });
+}
+
+document.querySelectorAll('.kb-col').forEach(col=>{
+  const key=col.dataset.col;
+  col.addEventListener('dragover',e=>{e.preventDefault();col.classList.add('drag-over-'+key);});
+  col.addEventListener('dragleave',e=>{if(!col.contains(e.relatedTarget))col.classList.remove('drag-over-'+key);});
+  col.addEventListener('drop',e=>{
+    e.preventDefault();col.classList.remove('drag-over-'+key);
+    if(dragId){const t=tasks.find(x=>x.id===dragId);if(t&&t.col!==key){t.col=key;render();}}
+  });
+});
+
+const openBtn=document.getElementById('openFormBtn');
+const form=document.getElementById('addForm');
+openBtn.addEventListener('click',()=>form.classList.toggle('hidden'));
+document.getElementById('cancelForm').addEventListener('click',()=>form.classList.add('hidden'));
+document.querySelectorAll('.col-add-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    form.classList.remove('hidden');
+    document.getElementById('newCol').value=b.dataset.target;
+    document.getElementById('newTitle').focus();
+  });
+});
+document.getElementById('submitTask').addEventListener('click',()=>{
+  const title=document.getElementById('newTitle').value.trim();
+  if(!title)return;
+  const col=document.getElementById('newCol').value;
+  const prio=document.getElementById('newPrio').value;
+  const desc=document.getElementById('newDesc').value.trim();
+  const avs=[['AK','av-a'],['BL','av-d'],['CW','av-c'],['DM','av-b']];
+  const av=avs[Math.floor(Math.random()*avs.length)];
+  const tags={high:'bug',med:'feat',low:'infra'};
+  tasks.push({id:'t'+Date.now(),col,title,desc:desc||null,tag:tags[prio],prio,time:'just now',av:av[0],avc:av[1],prog:null});
+  document.getElementById('newTitle').value='';
+  document.getElementById('newDesc').value='';
+  form.classList.add('hidden');
+  render();
+});
+
+render();
+</script>

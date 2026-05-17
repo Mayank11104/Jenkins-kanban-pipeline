@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  # MongoDB — official image, no custom Dockerfile
+  mongo:
+    image: mongo:latest
+    container_name: kanban-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - kanban-net
+
+  # Backend — Express + Socket.io
+  backend:
+    build: ./backend
+    container_name: kanban-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/kanban
+      - PORT=5000
+    depends_on:
+      - mongo
+    networks:
+      - kanban-net
+    restart: unless-stopped
+
+  # Frontend — React
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_API_URL: http://localhost:5000
+    container_name: kanban-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - kanban-net
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
+
+networks:
+  kanban-net:
+    driver: bridge
