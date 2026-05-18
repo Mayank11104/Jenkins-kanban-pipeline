@@ -3,7 +3,12 @@ import io from 'socket.io-client';
 import TaskCard from './components/TaskCard';
 import AddTaskForm from './components/AddTaskForm';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+// Derive backend URL at runtime so it works on any server (EC2, localhost, etc.)
+// REACT_APP_API_URL overrides if explicitly set at build time.
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  `${window.location.protocol}//${window.location.hostname}:5000`;
+
 const socket = io(API_URL);
 
 // Column config — colKey maps to API status
