@@ -211,7 +211,7 @@ function App() {
           <div className="kb-logo">K</div>
           <div>
             <div className="kb-title">KanbanFlow</div>
-            <div className="kb-breadcrumb">Projects / Board</div>
+            <div className="kb-breadcrumb">Projects</div>
           </div>
         </div>
 
