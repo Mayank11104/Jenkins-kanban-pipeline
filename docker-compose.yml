@@ -14,7 +14,8 @@ services:
 
   # Backend — Express + Socket.io
   backend:
-    build: ./backend
+    
+    image: mayank11104/kanban-backend:latest
     container_name: kanban-backend
     ports:
       - "5000:5000"
@@ -29,8 +30,8 @@ services:
 
   # Frontend — React (static build served by `serve`)
   frontend:
-    build:
-      context: ./frontend
+  
+    image: mayank11104/kanban-frontend:latest
     container_name: kanban-frontend
     ports:
       - "3000:3000"
