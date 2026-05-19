@@ -1,4 +1,4 @@
-# Kanban Board — Real-Time Task Management
+# Kanban Board — Real-Time Task Management Board
 
 A simple, real-time Kanban board built with React, Node.js, Express, MongoDB, and Socket.io. Fully containerized with Docker Compose.
 
