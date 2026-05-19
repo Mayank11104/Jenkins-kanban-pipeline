@@ -12,7 +12,7 @@ A simple, real-time Kanban board built with React, Node.js, Express, MongoDB, an
 
 ## Tech Stack
 
-| Layer     | Technology              |
+| Layer     | Technology             |
 |-----------|------------------------|
 | Frontend  | React.js               |
 | Backend   | Node.js + Express.js   |
@@ -24,7 +24,7 @@ A simple, real-time Kanban board built with React, Node.js, Express, MongoDB, an
 
 ```
 project-root/
-├── frontend/              # React app
+├── frontend/             
 │   ├── Dockerfile
 │   ├── public/
 │   └── src/
